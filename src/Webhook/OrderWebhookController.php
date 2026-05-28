@@ -29,8 +29,10 @@ class OrderWebhookController
         );
         $order = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if (!$order) {
+        if ($order == false) {
             $order = $this->orders->createFromPayload($payload);
+        } else {
+            // już istnieje, idziemy dalej
         }
 
         // Wystawiamy fakturę i od razu wysyłamy do KSeF
